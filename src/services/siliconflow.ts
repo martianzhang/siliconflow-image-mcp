@@ -11,12 +11,13 @@ export class SiliconFlowService {
   private apiKey: string;
   private baseUrl: string;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, baseUrl?: string) {
     if (!apiKey || apiKey.trim() === "") {
       throw new Error("SiliconFlow API key is required");
     }
     this.apiKey = apiKey;
-    this.baseUrl = "https://api.siliconflow.cn/v1";
+    // Use provided baseUrl or fall back to environment variable or default
+    this.baseUrl = baseUrl || process.env.SILICONFLOW_API_URL || "https://api.siliconflow.cn/v1";
   }
 
   /**

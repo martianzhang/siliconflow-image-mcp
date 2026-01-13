@@ -59,7 +59,8 @@ Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/
       "args": ["-y", "siliconflow-image-mcp"],
       "env": {
         "SILICONFLOW_API_KEY": "your-siliconflow-key",
-        "SILICONFLOW_IMAGE_DIR": "/path/to/save/images"
+        "SILICONFLOW_IMAGE_DIR": "/path/to/save/images",
+        "SILICONFLOW_API_URL": "https://your-custom-endpoint.com/v1"
       }
     }
   }
@@ -171,6 +172,7 @@ with negative prompt "blurry, low quality" and seed 12345
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `SILICONFLOW_API_KEY` | **Yes** | - | Your SiliconFlow API key from [siliconflow.cn](https://siliconflow.cn) |
+| `SILICONFLOW_API_URL` | No | `https://api.siliconflow.cn/v1` | Custom API base URL for third-party endpoints |
 | `SILICONFLOW_IMAGE_DIR` | No | System temp dir | Custom directory to save generated/edited images |
 | `SILICONFLOW_MOCK` | No | `false` | Enable mock mode for testing (no real API calls) |
 
@@ -180,18 +182,23 @@ with negative prompt "blurry, low quality" and seed 12345
 ```bash
 export SILICONFLOW_API_KEY="sk-xxxxx"
 export SILICONFLOW_IMAGE_DIR="/home/user/siliconflow-images"
+
+# Use custom API endpoint (e.g., for third-party compatible services)
+export SILICONFLOW_API_URL="https://your-custom-endpoint.com/v1"
 ```
 
 **Windows CMD:**
 ```cmd
 set SILICONFLOW_API_KEY=sk-xxxxx
 set SILICONFLOW_IMAGE_DIR=C:\Users\MyUser\Images
+set SILICONFLOW_API_URL=https://your-custom-endpoint.com/v1
 ```
 
 **Windows PowerShell:**
 ```powershell
 $env:SILICONFLOW_API_KEY="sk-xxxxx"
 $env:SILICONFLOW_IMAGE_DIR="C:\Users\MyUser\Images"
+$env:SILICONFLOW_API_URL="https://your-custom-endpoint.com/v1"
 ```
 
 ## 🔒 Security

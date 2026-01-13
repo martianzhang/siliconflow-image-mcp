@@ -28,6 +28,7 @@ import { createListModelsTool } from "./tools/list-models.js";
 
 // Environment variable check
 const SILICONFLOW_API_KEY = process.env.SILICONFLOW_API_KEY;
+const SILICONFLOW_API_URL = process.env.SILICONFLOW_API_URL;
 const MOCK_MODE = process.env.SILICONFLOW_MOCK === "true";
 
 if (!SILICONFLOW_API_KEY && !MOCK_MODE) {
@@ -51,6 +52,7 @@ if (!SILICONFLOW_API_KEY && !MOCK_MODE) {
   console.error("\nOptional configurations:");
   console.error("   export SILICONFLOW_MOCK=true          # Use mock mode for testing");
   console.error("   export SILICONFLOW_IMAGE_DIR=/path    # Custom directory for saved images");
+  console.error("   export SILICONFLOW_API_URL=/url       # Custom API base URL (for third-party endpoints)");
   process.exit(1);
 }
 
@@ -73,7 +75,7 @@ async function main() {
         testConnection: async () => true
       };
     } else {
-      siliconFlowService = new SiliconFlowService(SILICONFLOW_API_KEY);
+      siliconFlowService = new SiliconFlowService(SILICONFLOW_API_KEY, SILICONFLOW_API_URL);
 
       // Test connection
       const isConnected = await siliconFlowService.testConnection();
@@ -81,7 +83,9 @@ async function main() {
         console.error("❌ Failed to connect to SiliconFlow. Please check your API key.");
         process.exit(1);
       }
-      console.error("✅ Connected to SiliconFlow successfully");
+
+      const apiUrl = SILICONFLOW_API_URL || "https://api.siliconflow.cn/v1";
+      console.error(`✅ Connected to SiliconFlow successfully (API: ${apiUrl})`);
     }
 
     // Create MCP server
