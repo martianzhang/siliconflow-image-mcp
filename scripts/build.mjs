@@ -25,13 +25,13 @@ async function main() {
 
   try {
     // Build with esbuild (much faster and memory efficient)
-    // Output CommonJS to avoid ES module issues with npm wrappers
+    // Output ES modules to match official MCP server pattern
     await build({
       entryPoints: ['src/index.ts'],
       outdir: 'dist',
       bundle: true,
       platform: 'node',
-      format: 'cjs',
+      format: 'esm',
       target: 'node18',
       sourcemap: true,
       minify: false,
