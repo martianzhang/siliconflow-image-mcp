@@ -11,6 +11,9 @@ A Model Context Protocol (MCP) server for image generation and editing using **S
 - 📊 **Multiple Formats** - Support for various aspect ratios and resolutions
 - 🚀 **Easy Integration** - Simple setup with Claude Desktop and other MCP clients
 - ⚡ **Advanced Options** - Negative prompts, seeds, CFG values
+- 🖥️ **Cross-Platform** - Native support for Linux, macOS, and Windows
+- 📁 **Custom Storage** - Configure where images are saved via environment variable
+- 🧪 **Mock Mode** - Test without making real API calls
 
 ## 📦 Installation
 
@@ -36,6 +39,12 @@ siliconflow-image-mcp
 ### 2. Configure Environment
 ```bash
 export SILICONFLOW_API_KEY="your-siliconflow-api-key"
+
+# Optional: Custom directory for saved images (default: system temp dir)
+export SILICONFLOW_IMAGE_DIR="/path/to/your/images"
+
+# Optional: Mock mode for testing (no real API calls)
+export SILICONFLOW_MOCK="true"
 ```
 
 ### 3. Claude Desktop Configuration
@@ -49,7 +58,8 @@ Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/
       "command": "npx",
       "args": ["-y", "siliconflow-image-mcp"],
       "env": {
-        "SILICONFLOW_API_KEY": "your-siliconflow-key"
+        "SILICONFLOW_API_KEY": "your-siliconflow-key",
+        "SILICONFLOW_IMAGE_DIR": "/path/to/save/images"
       }
     }
   }
@@ -156,12 +166,41 @@ with negative prompt "blurry, low quality" and seed 12345
 - 99.9% uptime from Chinese networks
 - No Great Firewall interference
 
+## 🔧 Environment Variables
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `SILICONFLOW_API_KEY` | **Yes** | - | Your SiliconFlow API key from [siliconflow.cn](https://siliconflow.cn) |
+| `SILICONFLOW_IMAGE_DIR` | No | System temp dir | Custom directory to save generated/edited images |
+| `SILICONFLOW_MOCK` | No | `false` | Enable mock mode for testing (no real API calls) |
+
+### Examples
+
+**Linux/macOS:**
+```bash
+export SILICONFLOW_API_KEY="sk-xxxxx"
+export SILICONFLOW_IMAGE_DIR="/home/user/siliconflow-images"
+```
+
+**Windows CMD:**
+```cmd
+set SILICONFLOW_API_KEY=sk-xxxxx
+set SILICONFLOW_IMAGE_DIR=C:\Users\MyUser\Images
+```
+
+**Windows PowerShell:**
+```powershell
+$env:SILICONFLOW_API_KEY="sk-xxxxx"
+$env:SILICONFLOW_IMAGE_DIR="C:\Users\MyUser\Images"
+```
+
 ## 🔒 Security
 
 - **API Key**: Your API keys are stored securely in environment variables
 - **Input Validation**: All inputs are validated using Zod schemas
 - **Rate Limiting**: Respect service provider limits
 - **Content Filtering**: Consider implementing content policies for your use case
+- **File Storage**: Images are saved to your specified directory or system temp
 
 ## 🐛 Troubleshooting
 
@@ -185,6 +224,16 @@ export SILICONFLOW_API_KEY="your-key"
 - Restart Claude Desktop after configuration changes
 - Check the MCP server logs for errors
 - Verify the server is running with `npm start`
+
+### Images saved to wrong location
+- Set `SILICONFLOW_IMAGE_DIR` to your desired path
+- Ensure the directory exists and is writable
+- Default location: system temp directory (`/tmp/siliconflow-images/` on Linux/macOS)
+
+### Running on Windows
+- Use the `.cmd` wrapper automatically provided by npm
+- Or use Git Bash/WSL for Unix-style commands
+- For native CMD/PowerShell, the `.cmd` file handles execution
 
 ## 💰 Pricing
 
