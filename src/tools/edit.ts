@@ -2,7 +2,6 @@
  * Image editing tool implementation for SiliconFlow
  */
 
-import { z } from "zod";
 import { SiliconFlowService } from "../services/siliconflow.js";
 import { EditImageInputSchema, ToolResponse } from "../types/index.js";
 import { saveImageToFile, getTempDir } from "../utils/file.js";

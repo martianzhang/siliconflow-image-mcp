@@ -2,7 +2,6 @@
  * List image models tool implementation for SiliconFlow
  */
 
-import { z } from "zod";
 import { SiliconFlowService } from "../services/siliconflow.js";
 import { ListModelsInputSchema, ToolResponse } from "../types/index.js";
 
