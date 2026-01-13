@@ -5,8 +5,7 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "siliconflow-image-mcp": "bin/siliconflow-image-mcp",
-    "siliconflow-image-mcp.cmd": "bin/siliconflow-image-mcp.cmd"
+    "siliconflow-image-mcp": "bin/siliconflow-image-mcp.js"
   },
   "files": [
     "dist",
