@@ -13,6 +13,12 @@ if (process.argv.includes('--build')) {
   process.exit(0);
 }
 
+// Handle version flag
+if (process.argv.includes('--version') || process.argv.includes('-v')) {
+  console.log('1.0.8');
+  process.exit(0);
+}
+
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { SiliconFlowService } from "./services/siliconflow.js";
