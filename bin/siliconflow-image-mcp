@@ -1,5 +1,0 @@
-#!/bin/sh
-# Cross-platform launcher - works on Linux, macOS, and Unix-like systems
-# On Windows, npm will use the .cmd wrapper instead
-DIR="$(dirname "$0")"
-exec node "$DIR/../dist/index.js" "$@"

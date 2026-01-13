@@ -5,12 +5,11 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "siliconflow-image-mcp": "dist/index.js"
+    "siliconflow-image-mcp": "dist/launcher.cjs"
   },
   "files": [
     "dist",
     "src",
-    "bin",
     "README.md",
     "LICENSE"
   ],
