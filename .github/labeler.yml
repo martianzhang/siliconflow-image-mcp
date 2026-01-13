@@ -1,0 +1,51 @@
+# Add 'bug' label to any PR that modifies files in src/ or bin/ directories
+bug:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/**/*'
+          - 'bin/**/*'
+
+# Add 'enhancement' label to any PR that adds new features
+enhancement:
+  - head-branch: ['feat', 'feature', 'add', 'enhance']
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/**/*'
+
+# Add 'documentation' label to any PR that modifies README or docs
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'README.md'
+          - 'docs/**/*'
+
+# Add 'dependencies' label to any PR that updates package.json
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'package-lock.json'
+
+# Add 'ci' label to any PR that modifies GitHub workflows
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**/*'
+
+# Add 'test' label to any PR that modifies test files
+test:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.test.*'
+          - '**/*.spec.*'
+          - 'test/**/*'
+          - 'tests/**/*'
+
+# Add 'build' label to any PR that modifies build scripts
+build:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'scripts/**/*'
+          - 'tsconfig.json'
+          - 'vite.config.*'
+          - 'webpack.config.*'
