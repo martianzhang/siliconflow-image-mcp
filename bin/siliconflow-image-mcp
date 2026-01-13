@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
-# SiliconFlow Image MCP - Global wrapper script
+# SiliconFlow Image MCP - Unix/Linux/macOS wrapper script
 # Handles both local development and global installation
+# For Windows, use the siliconflow-image-mcp.cmd wrapper
 
 # Get the real directory of this script (resolves symlinks)
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
