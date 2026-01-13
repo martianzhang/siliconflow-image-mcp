@@ -42,8 +42,9 @@ if (!SILICONFLOW_API_KEY && !MOCK_MODE) {
     }
   }
 }`);
-  console.error("\nOr use mock mode for testing:");
-  console.error("   export SILICONFLOW_MOCK=true");
+  console.error("\nOptional configurations:");
+  console.error("   export SILICONFLOW_MOCK=true          # Use mock mode for testing");
+  console.error("   export SILICONFLOW_IMAGE_DIR=/path    # Custom directory for saved images");
   process.exit(1);
 }
 

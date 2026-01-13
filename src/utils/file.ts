@@ -7,6 +7,18 @@ import path from "path";
 import os from "os";
 
 /**
+ * Get the base directory for storing images
+ * Uses SILICONFLOW_IMAGE_DIR env var if set, otherwise defaults to system temp dir
+ */
+function getImageBaseDir(): string {
+  const customDir = process.env.SILICONFLOW_IMAGE_DIR;
+  if (customDir) {
+    return customDir;
+  }
+  return path.join(os.tmpdir(), "siliconflow-images");
+}
+
+/**
  * Save base64 image data to a temporary file
  * @param base64Data - Base64 encoded image data
  * @param prefix - Prefix for the filename
@@ -18,7 +30,7 @@ export async function saveImageToFile(
   prefix: string,
   mimeType: string
 ): Promise<string> {
-  const tempDir = path.join(os.tmpdir(), "siliconflow-images");
+  const tempDir = getImageBaseDir();
   await fs.mkdir(tempDir, { recursive: true });
 
   const extension = mimeType === "image/jpeg" ? "jpg" : "png";
@@ -34,8 +46,9 @@ export async function saveImageToFile(
 
 /**
  * Get the temporary directory path for siliconflow images
+ * Uses SILICONFLOW_IMAGE_DIR env var if set, otherwise defaults to system temp dir
  * @returns The temporary directory path
  */
 export function getTempDir(): string {
-  return path.join(os.tmpdir(), "siliconflow-images");
+  return getImageBaseDir();
 }
