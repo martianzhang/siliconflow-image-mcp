@@ -1,17 +1,30 @@
-#!/bin/sh
-# SiliconFlow Image MCP - Unix/Linux/macOS wrapper script
-# Handles both local development and global installation
+#!/usr/bin/env node
+// SiliconFlow Image MCP - Universal launcher for all platforms
+// Works on Windows (via npm wrapper), Linux, macOS
 
-# Get the real directory of this script (resolves symlinks)
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+import { spawn } from 'child_process';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { existsSync } from 'fs';
 
-# In production (npm install), dist/index.js is in node_modules/siliconflow-image-mcp/dist/
-# The bin script is in node_modules/siliconflow-image-mcp/bin/
-if [ -f "$SCRIPT_DIR/../dist/index.js" ]; then
-    # Production mode - run compiled JavaScript
-    exec node "$SCRIPT_DIR/../dist/index.js" "$@"
-else
-    echo "Error: Could not find siliconflow-image-mcp dist/index.js"
-    echo "Searched in: $SCRIPT_DIR/../dist/index.js"
-    exit 1
-fi
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Find dist/index.js relative to this file
+const distPath = join(__dirname, '..', 'dist', 'index.js');
+
+if (!existsSync(distPath)) {
+    console.error('Error: Could not find siliconflow-image-mcp dist/index.js');
+    console.error('Searched in:', distPath);
+    process.exit(1);
+}
+
+// Run the main program
+const child = spawn(process.execPath, [distPath, ...process.argv.slice(2)], {
+    stdio: 'inherit',
+    windowsHide: true
+});
+
+child.on('exit', (code) => {
+    process.exit(code);
+});
