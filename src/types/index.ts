@@ -22,10 +22,7 @@ export const GenerateImageInputSchema = z.object({
     .optional()
     .describe("Aspect ratio for generated images"),
 
-  imageSize: z
-    .enum(["1K", "2K", "4K"])
-    .optional()
-    .describe("Image size (higher resolution)"),
+  imageSize: z.enum(["1K", "2K", "4K"]).optional().describe("Image size (higher resolution)"),
 
   count: z
     .number()
@@ -36,10 +33,7 @@ export const GenerateImageInputSchema = z.object({
     .default(1)
     .describe("Number of images to generate (1-4)"),
 
-  negativePrompt: z
-    .string()
-    .optional()
-    .describe("Negative prompt - what to avoid in the image"),
+  negativePrompt: z.string().optional().describe("Negative prompt - what to avoid in the image"),
 
   seed: z
     .number()
@@ -80,11 +74,11 @@ export type ListModelsInput = z.infer<typeof ListModelsInputSchema>;
 
 // Image result type
 export interface ImageResult {
-  data: string;        // Base64 encoded image data
-  mimeType: string;    // e.g., "image/png"
-  size?: number;       // File size in bytes
-  width?: number;      // Image width in pixels
-  height?: number;     // Image height in pixels
+  data: string; // Base64 encoded image data
+  mimeType: string; // e.g., "image/png"
+  size?: number; // File size in bytes
+  width?: number; // Image width in pixels
+  height?: number; // Image height in pixels
 }
 
 // Model information type

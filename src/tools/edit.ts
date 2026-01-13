@@ -10,7 +10,8 @@ import { saveImageToFile, getTempDir } from "../utils/file.js";
 export function createEditImageTool(service: SiliconFlowService) {
   return {
     name: "edit_image",
-    description: "Edit existing images using SiliconFlow's AI models. Accepts base64 encoded image data, image URLs, or local file paths. Provide instructions for modifications. Uses Qwen/Qwen-Image-Edit-2509 by default. Images are saved to temporary files and paths are returned.",
+    description:
+      "Edit existing images using SiliconFlow's AI models. Accepts base64 encoded image data, image URLs, or local file paths. Provide instructions for modifications. Uses Qwen/Qwen-Image-Edit-2509 by default. Images are saved to temporary files and paths are returned.",
     inputSchema: EditImageInputSchema,
 
     handler: async (input: unknown): Promise<ToolResponse> => {
@@ -21,7 +22,7 @@ export function createEditImageTool(service: SiliconFlowService) {
           content: [
             {
               type: "text",
-              text: `Invalid input: ${parsed.error.errors.map(e => e.message).join(", ")}`,
+              text: `Invalid input: ${parsed.error.errors.map((e) => e.message).join(", ")}`,
             },
           ],
           isError: true,
@@ -34,7 +35,7 @@ export function createEditImageTool(service: SiliconFlowService) {
         const editedImage = await service.editImage(
           image,
           prompt,
-          model || "Qwen/Qwen-Image-Edit-2509"
+          model || "Qwen/Qwen-Image-Edit-2509",
         );
 
         // Save edited image to file
@@ -46,10 +47,11 @@ export function createEditImageTool(service: SiliconFlowService) {
           content: [
             {
               type: "text",
-              text: `Successfully edited image with prompt: "${prompt}"\n` +
-                    `Saved to: ${filepath}\n\n` +
-                    `Temporary directory: ${tempDir}\n` +
-                    `Note: This is a temporary file. Use the file path to access the image.`,
+              text:
+                `Successfully edited image with prompt: "${prompt}"\n` +
+                `Saved to: ${filepath}\n\n` +
+                `Temporary directory: ${tempDir}\n` +
+                `Note: This is a temporary file. Use the file path to access the image.`,
             },
           ],
         };

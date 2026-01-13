@@ -72,7 +72,7 @@ describe("generate_image tool", () => {
     expect(saveImageToFile).toHaveBeenCalledWith(
       "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
       "generated_1",
-      "image/png"
+      "image/png",
     );
     expect(getTempDir).toHaveBeenCalled();
 
@@ -147,9 +147,7 @@ describe("generate_image tool", () => {
   });
 
   it("should handle file system errors gracefully", async () => {
-    mockService.generateImage.mockResolvedValue([
-      { data: "img1", mimeType: "image/png" },
-    ]);
+    mockService.generateImage.mockResolvedValue([{ data: "img1", mimeType: "image/png" }]);
 
     vi.mocked(saveImageToFile).mockRejectedValue(new Error("Permission denied"));
 

@@ -28,7 +28,7 @@ function getImageBaseDir(): string {
 export async function saveImageToFile(
   base64Data: string,
   prefix: string,
-  mimeType: string
+  mimeType: string,
 ): Promise<string> {
   const tempDir = getImageBaseDir();
   await fs.mkdir(tempDir, { recursive: true });
@@ -38,7 +38,7 @@ export async function saveImageToFile(
   const filename = `${prefix}_${timestamp}.${extension}`;
   const filepath = path.join(tempDir, filename);
 
-  const buffer = Buffer.from(base64Data, 'base64');
+  const buffer = Buffer.from(base64Data, "base64");
   await fs.writeFile(filepath, buffer);
 
   return filepath;

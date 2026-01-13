@@ -68,7 +68,7 @@ describe("edit_image tool", () => {
     expect(saveImageToFile).toHaveBeenCalledWith(
       "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
       "edited",
-      "image/png"
+      "image/png",
     );
     expect(getTempDir).toHaveBeenCalled();
 

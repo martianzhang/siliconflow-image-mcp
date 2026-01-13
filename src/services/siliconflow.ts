@@ -27,7 +27,7 @@ export class SiliconFlowService {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify(body),
     });
@@ -56,7 +56,7 @@ export class SiliconFlowService {
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${this.apiKey}`,
       },
     });
 
@@ -78,7 +78,7 @@ export class SiliconFlowService {
     imageSize?: string,
     count: number = 1,
     negativePrompt?: string,
-    seed?: number
+    seed?: number,
   ): Promise<ImageResult[]> {
     try {
       // Build request body
@@ -118,12 +118,14 @@ export class SiliconFlowService {
         }
 
         const imageBuffer = await imageResponse.arrayBuffer();
-        const base64Data = Buffer.from(imageBuffer).toString('base64');
+        const base64Data = Buffer.from(imageBuffer).toString("base64");
 
         // Determine mime type from URL or default to PNG
-        const mimeType = imageUrl.includes('.png') ? 'image/png' :
-                        imageUrl.includes('.jpg') || imageUrl.includes('.jpeg') ? 'image/jpeg' :
-                        'image/png';
+        const mimeType = imageUrl.includes(".png")
+          ? "image/png"
+          : imageUrl.includes(".jpg") || imageUrl.includes(".jpeg")
+            ? "image/jpeg"
+            : "image/png";
 
         images.push({
           data: base64Data,
@@ -146,7 +148,7 @@ export class SiliconFlowService {
   async editImage(
     image: string,
     prompt: string,
-    model: string = "Qwen/Qwen-Image-Edit-2509"
+    model: string = "Qwen/Qwen-Image-Edit-2509",
   ): Promise<ImageResult> {
     try {
       // Determine if image is base64, URL, or local file path
@@ -161,14 +163,18 @@ export class SiliconFlowService {
       } else if (fs.existsSync(image) && fs.statSync(image).isFile()) {
         // Local file path - read and convert to base64 data URL
         const imageBuffer = fs.readFileSync(image);
-        const base64Data = imageBuffer.toString('base64');
+        const base64Data = imageBuffer.toString("base64");
 
         // Determine mime type from file extension
         const ext = path.extname(image).toLowerCase();
-        const mimeType = ext === '.png' ? 'image/png' :
-                        ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' :
-                        ext === '.webp' ? 'image/webp' :
-                        'image/png';
+        const mimeType =
+          ext === ".png"
+            ? "image/png"
+            : ext === ".jpg" || ext === ".jpeg"
+              ? "image/jpeg"
+              : ext === ".webp"
+                ? "image/webp"
+                : "image/png";
 
         imageContent = `data:${mimeType};base64,${base64Data}`;
       } else {
@@ -199,11 +205,13 @@ export class SiliconFlowService {
       }
 
       const imageBuffer = await imageResponse.arrayBuffer();
-      const base64Data = Buffer.from(imageBuffer).toString('base64');
+      const base64Data = Buffer.from(imageBuffer).toString("base64");
 
-      const mimeType = imageUrl.includes('.png') ? 'image/png' :
-                      imageUrl.includes('.jpg') || imageUrl.includes('.jpeg') ? 'image/jpeg' :
-                      'image/png';
+      const mimeType = imageUrl.includes(".png")
+        ? "image/png"
+        : imageUrl.includes(".jpg") || imageUrl.includes(".jpeg")
+          ? "image/jpeg"
+          : "image/png";
 
       return {
         data: base64Data,

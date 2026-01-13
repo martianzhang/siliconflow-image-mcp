@@ -58,11 +58,12 @@
     "@types/node": "^20.11.5",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
+    "esbuild": "^0.25.0",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
-    "vitest": "^1.2.1"
+    "vitest": "^4.0.17"
   },
   "engines": {
     "node": ">=18.0.0"

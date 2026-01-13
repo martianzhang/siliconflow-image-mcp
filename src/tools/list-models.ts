@@ -9,7 +9,8 @@ import { ListModelsInputSchema, ToolResponse } from "../types/index.js";
 export function createListModelsTool(service: SiliconFlowService) {
   return {
     name: "list_image_models",
-    description: "List all available image generation models from SiliconFlow. Shows model IDs and capabilities.",
+    description:
+      "List all available image generation models from SiliconFlow. Shows model IDs and capabilities.",
     inputSchema: ListModelsInputSchema,
 
     handler: async (input: unknown): Promise<ToolResponse> => {
@@ -20,7 +21,7 @@ export function createListModelsTool(service: SiliconFlowService) {
           content: [
             {
               type: "text",
-              text: `Invalid input: ${parsed.error.errors.map(e => e.message).join(", ")}`,
+              text: `Invalid input: ${parsed.error.errors.map((e) => e.message).join(", ")}`,
             },
           ],
           isError: true,
@@ -48,7 +49,9 @@ export function createListModelsTool(service: SiliconFlowService) {
             const parts = [
               `${index + 1}. **${model.name}** (\`${model.id}\`)`,
               model.description ? `   - ${model.description}` : null,
-              model.output_modalities ? `   - Capabilities: ${model.output_modalities.join(", ")}` : null,
+              model.output_modalities
+                ? `   - Capabilities: ${model.output_modalities.join(", ")}`
+                : null,
             ].filter(Boolean);
 
             return parts.join("\n");
