@@ -1,30 +1,4 @@
-#!/usr/bin/env node
-// SiliconFlow Image MCP - Universal launcher for all platforms
-// Works on Windows (via npm wrapper), Linux, macOS
-
-import { spawn } from 'child_process';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import { existsSync } from 'fs';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Find dist/index.js relative to this file
-const distPath = join(__dirname, '..', 'dist', 'index.js');
-
-if (!existsSync(distPath)) {
-    console.error('Error: Could not find siliconflow-image-mcp dist/index.js');
-    console.error('Searched in:', distPath);
-    process.exit(1);
-}
-
-// Run the main program
-const child = spawn(process.execPath, [distPath, ...process.argv.slice(2)], {
-    stdio: 'inherit',
-    windowsHide: true
-});
-
-child.on('exit', (code) => {
-    process.exit(code);
-});
+#!/bin/sh
+# SiliconFlow Image MCP - Unix/Linux/macOS wrapper
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+exec node "$SCRIPT_DIR/../dist/index.js" "$@"
