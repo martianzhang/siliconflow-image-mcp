@@ -97,6 +97,9 @@ spawn(process.execPath, [distPath, ...process.argv.slice(2)], {
       launcherContent
     );
 
+    // Make launcher executable (Unix/Linux/Mac)
+    fs.chmodSync(path.join(distDir, 'launcher.cjs'), 0o755);
+
     // Copy README and LICENSE
     const filesToCopy = ['README.md', 'LICENSE'];
     filesToCopy.forEach(file => {
