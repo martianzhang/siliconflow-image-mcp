@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+# SiliconFlow Image MCP - Global wrapper script
+# Handles both local development and global installation
+
+# Get the real directory of this script (resolves symlinks)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# If we're in a symlinked location, follow it to find the real package location
+if [ -L "$0" ]; then
+    SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+fi
+
+# Check if we're in a development environment (source files exist)
+if [ -f "$SCRIPT_DIR/../src/index.ts" ]; then
+    # Development mode - run TypeScript source directly
+    exec tsx "$SCRIPT_DIR/../src/index.ts"
+elif [ -f "$SCRIPT_DIR/../dist/index.js" ]; then
+    # Production mode - run compiled JavaScript
+    exec node "$SCRIPT_DIR/../dist/index.js"
+else
+    echo "❌ Error: Could not find siliconflow-image-mcp source files"
+    echo "Searched in: $SCRIPT_DIR/../src/index.ts and $SCRIPT_DIR/../dist/index.js"
+    exit 1
+fi

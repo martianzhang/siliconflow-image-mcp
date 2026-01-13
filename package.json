@@ -1,0 +1,70 @@
+{
+  "name": "siliconflow-image-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for image generation and editing using SiliconFlow - Optimized for China users",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "siliconflow-image-mcp": "bin/siliconflow-image-mcp"
+  },
+  "files": [
+    "dist",
+    "src",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "tsx src/index.ts",
+    "start": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier --check src/**/*.ts",
+    "prepublishOnly": "npm test && npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "siliconflow",
+    "image-generation",
+    "ai",
+    "claude",
+    "model-context-protocol",
+    "china",
+    "image-editing",
+    "flux",
+    "qwen"
+  ],
+  "author": "martianzhang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martianzhang/siliconflow-image-mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/martianzhang/siliconflow-image-mcp/issues"
+  },
+  "homepage": "https://github.com/martianzhang/siliconflow-image-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.3",
+    "tsx": "^4.7.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
