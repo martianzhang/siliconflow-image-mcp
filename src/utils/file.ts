@@ -45,7 +45,9 @@ function validateBase64Image(base64Data: string): void {
   // Estimate decoded size (base64 is ~4/3 of original size)
   const estimatedSize = Math.ceil((base64Data.length * 3) / 4);
   if (estimatedSize > MAX_IMAGE_SIZE) {
-    throw new Error(`Image too large: estimated ${estimatedSize} bytes exceeds maximum ${MAX_IMAGE_SIZE} bytes`);
+    throw new Error(
+      `Image too large: estimated ${estimatedSize} bytes exceeds maximum ${MAX_IMAGE_SIZE} bytes`,
+    );
   }
 }
 
@@ -57,7 +59,9 @@ function validateBase64Image(base64Data: string): void {
 function validateMimeType(mimeType: string): void {
   const allowedMimeTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
   if (!allowedMimeTypes.includes(mimeType)) {
-    throw new Error(`Invalid MIME type: ${mimeType}. Allowed types: ${allowedMimeTypes.join(", ")}`);
+    throw new Error(
+      `Invalid MIME type: ${mimeType}. Allowed types: ${allowedMimeTypes.join(", ")}`,
+    );
   }
 }
 
@@ -81,8 +85,12 @@ export async function saveImageToFile(
   const tempDir = getImageBaseDir();
   await fs.mkdir(tempDir, { recursive: true });
 
-  const extension = mimeType === "image/jpeg" || mimeType === "image/jpg" ? "jpg" :
-                    mimeType === "image/webp" ? "webp" : "png";
+  const extension =
+    mimeType === "image/jpeg" || mimeType === "image/jpg"
+      ? "jpg"
+      : mimeType === "image/webp"
+        ? "webp"
+        : "png";
   // Use cryptographically secure random bytes to prevent race conditions and prediction attacks
   const randomSuffix = crypto.randomBytes(8).toString("hex");
   const filename = `${prefix}_${randomSuffix}.${extension}`;
@@ -93,7 +101,9 @@ export async function saveImageToFile(
 
   // Additional size check after decoding (defense in depth)
   if (buffer.length > MAX_IMAGE_SIZE) {
-    throw new Error(`Decoded image too large: ${buffer.length} bytes exceeds maximum ${MAX_IMAGE_SIZE} bytes`);
+    throw new Error(
+      `Decoded image too large: ${buffer.length} bytes exceeds maximum ${MAX_IMAGE_SIZE} bytes`,
+    );
   }
 
   await fs.writeFile(filepath, buffer);

@@ -64,7 +64,10 @@ export class SiliconFlowService {
 
     for (const allowedDir of this.allowedImageDirs) {
       const resolvedAllowedDir = path.resolve(allowedDir);
-      if (resolvedPath.startsWith(resolvedAllowedDir + path.sep) || resolvedPath === resolvedAllowedDir) {
+      if (
+        resolvedPath.startsWith(resolvedAllowedDir + path.sep) ||
+        resolvedPath === resolvedAllowedDir
+      ) {
         return true;
       }
     }
