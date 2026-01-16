@@ -7,6 +7,7 @@ yarn-error.log*
 # Build output
 dist/
 build/
+out/
 
 # Environment variables
 .env
@@ -14,10 +15,13 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+!.env.example
 
 # IDE
 .vscode/
 .idea/
+*.code-workspace
 *.swp
 *.swo
 *~
@@ -25,9 +29,118 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+*.DS_Store
 
 # Logs
 *.log
+logs/
+analytics/
+*.debug.log
 
 # Test
 coverage/
+.nyc_output/
+*.lcov
+*.profraw
+*.profdata
+
+# Local development planning
+PLAN.md
+*.local.md
+private-notes/
+private/
+scratch/
+scratch.md
+notes.md
+dev-notes.md
+TODO.md
+tmp/
+tmp.*
+
+# Generated documentation (keep README.md)
+CHANGELOG.md
+docs/generated/
+
+# Build artifacts
+*.tgz
+*.tar.gz
+*.zip
+pack/
+
+# TypeScript build info
+.tsbuildinfo
+
+# Vite/ESBuild cache
+.vite/
+.esbuild/
+
+# Local configs
+config.local.json
+settings.local.json
+config/secrets/
+config/local.*
+
+# API keys and secrets (should never be committed)
+*.key
+*.pem
+secrets/
+credentials/
+secrets.yaml
+
+# Cache directories
+.cache/
+.coverage/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+.working/
+.temp/
+.tmp/
+
+# Editor backups and specific files
+*~
+*.swp
+*.swo
+*.bak
+*.sublime-project
+*.sublime-workspace
+
+# MCP server specific (local testing)
+test-data/
+test-images/
+mock-responses/
+
+# Custom image directory (user configured)
+siliconflow-images/
+images/
+
+# Debug logs
+debug.log
+
+# Performance profiles
+*.cpuprofile
+*.heapsnapshot
+
+# Local overrides
+*.override.*
+*.local.*
+
+# Security related (never commit)
+# Note: .env files are already handled above
+
+# npm pack files
+*.tgz
+
+# JS/TS source maps
+*.js.map
+*.d.ts.map
+
+# V8 coverage
+*.v8coverage

@@ -6,18 +6,70 @@
 import { ImageResult, ModelInfo } from "../types/index.js";
 import * as fs from "fs";
 import * as path from "path";
+import os from "os";
 
 export class SiliconFlowService {
   private apiKey: string;
   private baseUrl: string;
+  private allowedImageDirs: string[];
 
-  constructor(apiKey: string, baseUrl?: string) {
+  constructor(apiKey: string, baseUrl?: string, allowedImageDirs?: string[]) {
     if (!apiKey || apiKey.trim() === "") {
       throw new Error("SiliconFlow API key is required");
     }
     this.apiKey = apiKey;
     // Use provided baseUrl or fall back to environment variable or default
     this.baseUrl = baseUrl || process.env.SILICONFLOW_API_URL || "https://api.siliconflow.cn/v1";
+    // Configure allowed image directories for file path validation
+    this.allowedImageDirs = allowedImageDirs || this.getDefaultAllowedDirs();
+  }
+
+  /**
+   * Get default allowed directories for image files
+   * Prevents path traversal attacks by restricting file access
+   */
+  private getDefaultAllowedDirs(): string[] {
+    const dirs: string[] = [];
+
+    // Add user's home directory
+    const homeDir = os.homedir();
+    if (homeDir) {
+      dirs.push(homeDir);
+    }
+
+    // Add current working directory
+    const cwd = process.cwd();
+    if (cwd) {
+      dirs.push(cwd);
+    }
+
+    // Add custom image directory if set
+    const customDir = process.env.SILICONFLOW_IMAGE_DIR;
+    if (customDir) {
+      dirs.push(customDir);
+    }
+
+    // Add system temp directory
+    dirs.push(os.tmpdir());
+
+    return dirs;
+  }
+
+  /**
+   * Validate that a file path is within allowed directories
+   * Prevents path traversal attacks
+   */
+  private isPathAllowed(filePath: string): boolean {
+    const resolvedPath = path.resolve(filePath);
+
+    for (const allowedDir of this.allowedImageDirs) {
+      const resolvedAllowedDir = path.resolve(allowedDir);
+      if (resolvedPath.startsWith(resolvedAllowedDir + path.sep) || resolvedPath === resolvedAllowedDir) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -161,26 +213,34 @@ export class SiliconFlowService {
       } else if (image.startsWith("http://") || image.startsWith("https://")) {
         // URL - SiliconFlow accepts URLs directly
         imageContent = image;
-      } else if (fs.existsSync(image) && fs.statSync(image).isFile()) {
-        // Local file path - read and convert to base64 data URL
-        const imageBuffer = fs.readFileSync(image);
-        const base64Data = imageBuffer.toString("base64");
-
-        // Determine mime type from file extension
-        const ext = path.extname(image).toLowerCase();
-        const mimeType =
-          ext === ".png"
-            ? "image/png"
-            : ext === ".jpg" || ext === ".jpeg"
-              ? "image/jpeg"
-              : ext === ".webp"
-                ? "image/webp"
-                : "image/png";
-
-        imageContent = `data:${mimeType};base64,${base64Data}`;
       } else {
-        // Assume raw base64 string, convert to data URL
-        imageContent = `data:image/png;base64,${image}`;
+        // Try to read as local file path - read and convert to base64 data URL
+        // Validate path is within allowed directories to prevent path traversal attacks
+        if (!this.isPathAllowed(image)) {
+          // Not a valid file path, assume raw base64 string, convert to data URL
+          imageContent = `data:image/png;base64,${image}`;
+        } else {
+          try {
+            const imageBuffer = fs.readFileSync(image);
+            const base64Data = imageBuffer.toString("base64");
+
+            // Determine mime type from file extension
+            const ext = path.extname(image).toLowerCase();
+            const mimeType =
+              ext === ".png"
+                ? "image/png"
+                : ext === ".jpg" || ext === ".jpeg"
+                  ? "image/jpeg"
+                  : ext === ".webp"
+                    ? "image/webp"
+                    : "image/png";
+
+            imageContent = `data:${mimeType};base64,${base64Data}`;
+          } catch (fileError) {
+            // Not a valid file path, assume raw base64 string, convert to data URL
+            imageContent = `data:image/png;base64,${image}`;
+          }
+        }
       }
 
       // Build request body for image editing
