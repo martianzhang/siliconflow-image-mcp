@@ -1,6 +1,6 @@
 {
   "name": "siliconflow-image-mcp",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "MCP server for image generation and editing using SiliconFlow - Optimized for China users",
   "type": "module",
   "main": "dist/index.js",
