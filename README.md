@@ -174,6 +174,7 @@ with negative prompt "blurry, low quality" and seed 12345
 | `SILICONFLOW_API_KEY` | **Yes** | - | Your SiliconFlow API key from [siliconflow.cn](https://siliconflow.cn) |
 | `SILICONFLOW_API_URL` | No | `https://api.siliconflow.cn/v1` | Custom API base URL for third-party endpoints |
 | `SILICONFLOW_IMAGE_DIR` | No | System temp dir | Custom directory to save generated/edited images |
+| `SILICONFLOW_MAX_IMAGE_SIZE` | No | `10485760` (10 MB) | Maximum size in bytes for saved image files |
 | `SILICONFLOW_MOCK` | No | `false` | Enable mock mode for testing (no real API calls) |
 
 ### Examples

@@ -22,8 +22,9 @@ function getImageBaseDir(): string {
 /**
  * Maximum size for saved image files (10 MB)
  * Prevents disk space exhaustion attacks
+ * Uses SILICONFLOW_MAX_IMAGE_SIZE env var if set, otherwise defaults to 10 MB
  */
-const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10 MB
+const MAX_IMAGE_SIZE = parseInt(process.env.SILICONFLOW_MAX_IMAGE_SIZE || "10485760"); // 10 MB default
 
 /**
  * Validate base64 data format and size

@@ -52,6 +52,7 @@ if (!SILICONFLOW_API_KEY && !MOCK_MODE) {
   console.error("\nOptional configurations:");
   console.error("   export SILICONFLOW_MOCK=true          # Use mock mode for testing");
   console.error("   export SILICONFLOW_IMAGE_DIR=/path    # Custom directory for saved images");
+  console.error("   export SILICONFLOW_MAX_IMAGE_SIZE=bytes # Maximum image file size (default: 10485760)");
   console.error("   export SILICONFLOW_API_URL=/url       # Custom API base URL (for third-party endpoints)");
   process.exit(1);
 }
